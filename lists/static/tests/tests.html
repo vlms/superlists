@@ -20,10 +20,14 @@
     <script src="../list.js"></script>
     <script>
         test("errors should be hidden on keypress", function () {
-            $('input').trigger('keypress');
+            $('input[name="text"]').trigger('keypress');
             equal($('.has-error').is(':visible'), false);
         });
-        test("errors should not be hidden unless there is keypress", function () {
+        test("errors should be hidden on click", function () {
+            $('input[name="text"]').trigger('click');
+            equal($('.has-error').is(':visible'), false);
+        });
+        test("errors should not be hidden unless there is keypress or click", function () {
             equal($('.has-error').is(':visible'), true);
         });
     </script>
