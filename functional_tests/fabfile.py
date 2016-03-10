@@ -1,4 +1,5 @@
 from fabric.api import env, run
+env.key_filename = '/home/%s/.ssh/MyFirstKey.pem' % env.user
 
 
 def _get_base_folder(host):
@@ -12,7 +13,7 @@ def _get_manage_dot_py(host):
 
 
 def reset_database():
-    run('{manage_py} flush --noiput'.format(
+    run('{manage_py} flush --noinput'.format(
         manage_py=_get_manage_dot_py(env.host)
     ))
 

@@ -122,10 +122,21 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
         },
+        'logfile': {
+            'level':'DEBUG',
+            'class':'logging.FileHandler',
+            'filename': BASE_DIR + "/../logfile",
+        },
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
+            'handlers': ['logfile'],
+        },
+        'accounts': {
+            'handlers': ['logfile'],
+        },
+        'lists': {
+            'handlers': ['logfile'],
         },
     },
     'root': {'level': 'INFO'},
