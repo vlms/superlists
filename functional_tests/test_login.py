@@ -34,7 +34,10 @@ class LoginTest(FunctionalTest):
         self.wait_to_be_logged_in(email=TEST_EMAIL)
 
         # Terrifiedof this new feature, she reflexively clicks "logout"
-        self.browser.find_element_by_id('id_logout').click()
+        logout_link = self.browser.find_element_by_id('id_logout')
+        ## Wait for Ajax to complete
+        time.sleep(1)
+        logout_link.click()
         self.wait_to_be_logged_out(email=TEST_EMAIL)
 
         # The "logged out" status also persists after a refresh
