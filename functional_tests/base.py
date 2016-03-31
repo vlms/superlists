@@ -2,6 +2,9 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from .server_tools import reset_database
+from .server_tools import create_session_on_server
+from .management.commands.create_session import create_pre_authenticated_session
+from django.conf import settings
 import sys
 import os
 import time
@@ -113,3 +116,17 @@ class FunctionalTest(StaticLiveServerTestCase):
             except (AssertionError, WebDriverException):
                 time.sleep(0.1)
         return function_with_assertion()
+
+    def create_pre_authenticated_session(self, email):
+        if self.against_staging:
+            session_key = create_session_on_server(self.server_host, email)
+        else:
+            session_key = create_pre_authenticated_session(email)
+        ## to set a cookeie we need to first visitthe domain.
+        ## 404 pages load the quickest!
+        self.browser.get(self.server_url + "/404_no_such_url/")
+        self.browser.add_cookie(dict(
+            name=settings.SESSION_COOKIE_NAME,
+            value=session_key,
+            path='/',
+        ))
