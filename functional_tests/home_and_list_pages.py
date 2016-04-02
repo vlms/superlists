@@ -1,5 +1,6 @@
 ITEM_INPUT_ID = 'id_text'
 
+
 class HomePage(object):
 
     def __init__(self, test):
